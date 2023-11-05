@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Masjid Al-Latiff by Latifa</title>
+</head>
+<body>
+    <canvas id="world" width="1000" height="500" style="border: 1px solid black;"></canvas>
+    
+    <script>
+        // Inisialisasi Canvas
+        let canvas = document.getElementById("world");
+        let context = canvas.getContext("2d");
+
+        function createDome(x, y, r, color, withEdge = true) {
+            // Membuat Kubah
+            context.fillStyle = color ;
+            context.beginPath();
+            context.arc(x, y, r, Math.PI, 2*Math.PI);
+
+            // Menutup Kubah
+            context.moveTo(x-r, y);
+            context.lineTo(x+r, y);
+
+            // Mewarnai dan Menggaris Kubah
+            context.lineWidth = r/10;
+            context.fill();
+
+            if (withEdge){
+                // context.stroke();
+                context.beginPath(); 
+                context.moveTo(x, y - r);
+                context.lineTo(x, y - r - (r/4));
+                context.stroke();
+
+                context.beginPath();
+                context.arc(x, y - r - (r/4) - (r/4), (r/4), 1/4 * Math.PI, 3/2 * Math.PI);
+                context.stroke();
+
+            }
+        }
+
+        function createWall(x, y, w, h, color) {
+            context.beginPath();
+            context.rect(x, y, w, h, color);
+            context.lineWidth = w / 10;
+            // context.stroke();
+            context.fillStyle = color;
+            context.fill();
+        }
+
+        function createDoor(x, y, width, height, color){
+            createDome(x, canvas.height / 2 + height, width / 2, color, false); 
+            createWall(x - width / 2, canvas.height / 2 + height, width, height, color);
+        }
+
+        // Membuat Rumput
+        context.fillStyle = "forestgreen";
+        context.fillRect(0, canvas.height/ 2 + 150, canvas.width, canvas.height)
+
+        // Membuat Kubah
+        createDome(canvas.width / 2 - 240, canvas.height / 2, 60, "gold");
+        createDome(canvas.width / 2, canvas.height / 2, 100, "gold");
+        createDome(canvas.width / 2 + 240, canvas.height / 2, 60, "gold");
+
+        // Membuat Tembok
+        createWall(canvas.width / 2 - 300, canvas.height/ 2, 600, 200, "seashell"); 
+        createWall(canvas.width / 2 + 120, canvas.height/ 2, 60, 200, "olive"); 
+        createWall(canvas.width / 2 - 60 - 120, canvas.height/ 2, 60, 200, "olive");
+
+        // Membuat tulisan
+        context.font="15pt Arial";
+        context.fillText("Masjid Al - Latiff", canvas.width/ 2 - 70 , canvas.height/ 2 + 35)
+
+        // Membuat Tembok menara
+        createWall(canvas.width / 2 - 335 - 35, canvas.height/2, (2 * 35), 200, "olive"); 
+        createWall(canvas.width / 2 - 335 - 35, canvas.height/5, (2 * 35), (2*80), "olive");
+        createWall(canvas.width / 2 + 335 - 35, canvas.height/2, (2 * 35), 200, "olive"); 
+        createWall(canvas.width / 2 + 335 - 35, canvas.height/5, (2 * 35), (2*80), "olive");
+        createWall(canvas.width / 2 - 380, canvas.height/ 2, 760, 15, "burlywood");
+        
+        // Membuat Kubah Menara
+        createDome(canvas.width / 2 - 335, canvas.height / 2 - 150, 35, "gold")
+        createWall(canvas.width / 2 - 380, canvas.height/ 5, 90, 10, "burlywood");
+        createDome(canvas.width / 2 + 335, canvas.height / 2 - 150, 35, "gold")
+        createWall(canvas.width / 2 + 290, canvas.height/ 5, 90, 10, "burlywood");
+
+        // Membuat pintu dan jendela
+        createDoor(canvas.width/ 2 - 240, canvas.height / 2 + 100, 60, 80, "skyblue"); 
+        createDoor(canvas.width/ 2, canvas.height/ 2 + 100, 100, 100, "sienna");
+        createDoor(canvas.width/ 2 + 240, canvas.height/ 2 + 100, 60, 80, "skyblue");
+        
+        // Membuat tangga
+        createWall(canvas.width / 2 - 400, canvas.height/ 2 + 200, 800, 15, "burlywood");
+        createWall(canvas.width / 2 - 425, canvas.height/  2 + 200 + 15, 850, 15, "burlywood");
+
+        // Membuat background langit
+        canvas.style.backgroundColor = "powderblue";
+  </script>
+</body>
+</html>
